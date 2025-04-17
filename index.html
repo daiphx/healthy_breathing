@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Healthy Breathing</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      padding-top: 100px;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    #phase {
+      font-size: 2.5em;
+      margin-top: 30px;
+    }
+    #timer {
+      font-size: 4em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>1-Minute Breathing Exercise</h1>
+  <div id="phase">Get Ready...</div>
+  <div id="timer">60</div>
+
+  <script>
+    const steps = [
+      { label: "Inhale (4s)", duration: 4 },
+      { label: "Hold (4s)", duration: 4 },
+      { label: "Exhale (8s)", duration: 8 }
+    ];
+
+    let totalSeconds = 60;
+    let timerEl = document.getElementById("timer");
+    let phaseEl = document.getElementById("phase");
+
+    function startBreathing() {
+      let interval = setInterval(() => {
+        if (totalSeconds <= 0) {
+          clearInterval(interval);
+          phaseEl.textContent = "Good job!";
+          timerEl.textContent = "0";
+          return;
+        }
+
+        timerEl.textContent = totalSeconds;
+        totalSeconds--;
+
+        let cyclePos = 60 - totalSeconds;
+        let phaseTime = cyclePos % 16;
+        if (phaseTime < 4) phaseEl.textContent = steps[0].label;
+        else if (phaseTime < 8) phaseEl.textContent = steps[1].label;
+        else phaseEl.textContent = steps[2].label;
+      }, 1000);
+    }
+
+    window.onload = startBreathing;
+  </script>
+</body>
+</html>
